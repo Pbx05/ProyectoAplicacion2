@@ -20,10 +20,4 @@ public class Controlador {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
-
-	// Método designado a cambiar entre vistas
-	public void cambiarVentana(int desde, int hasta) {
-		((JFrame) misVistas[desde]).setVisible(false);
-		((JFrame) misVistas[hasta]).setVisible(true);
-	}
 }

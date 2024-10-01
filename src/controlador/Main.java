@@ -19,13 +19,6 @@ public class Main {
 		miControlador.setVista(misVistas);
 		miControlador.setModelo(miModelo);
 
-		// Para que funcione con las vistas, uso un foreach para hacer el set tanto del
-		// modelo como del controlador de todas las vistas
-		for (Vista vista : misVistas) {
-			vista.setModelo(miModelo);
-			vista.setControlador(miControlador);
-		}
-
 		// Inicio la aplicación en la vista 0, la que tiene el menú
 		_00_Menu frame = (_00_Menu) misVistas[0];
 
