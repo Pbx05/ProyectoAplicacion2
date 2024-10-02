@@ -36,6 +36,7 @@ public class _00_Menu extends JFrame implements Vista{
 	private JButton btnDescomprimirArchivo;
 	private JButton btnEliminarArchivo;
 	private JButton btnVisualizarArchivo;
+	private Object [][] datos;
 	
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
@@ -61,7 +62,6 @@ public class _00_Menu extends JFrame implements Vista{
 		
 		tableDatos = new JTable();
 		scrollPane.setViewportView(tableDatos);
-		tableDatos.setEnabled(false);
 		tableDatos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		JLabel lblNewLabel = new JLabel("Gestor de archivos avanzado");
@@ -107,14 +107,15 @@ public class _00_Menu extends JFrame implements Vista{
 		btnVisualizarArchivo = new JButton("Visualizar archivo");
 		btnVisualizarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object [][] datos = miControlador.visualizarDatos();
-				String[] columnas = {"Nombre", "Tamaño"};
+				datos = miControlador.visualizarDatos();
+				String[] columnas = {"Nombre", "Tamaño", "Estado"};
 				modelo = new DefaultTableModel(datos, columnas);
 				tableDatos.setModel(modelo);
 			}
 		});
 		btnVisualizarArchivo.setBounds(10, 316, 172, 23);
 		contentPane.add(btnVisualizarArchivo);
+		
 		JButton btnCambioVista = new JButton("CambiarVista");
 		btnCambioVista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
