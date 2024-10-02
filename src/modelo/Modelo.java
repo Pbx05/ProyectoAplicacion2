@@ -11,7 +11,7 @@ import vista.Vista;
 public class Modelo {
 	private Vista[] misVistas;
 	private Controlador miControlador;
-	File directorio;
+	private File usuarios;
 
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
@@ -21,26 +21,12 @@ public class Modelo {
 		this.misVistas = misVistas;
 	}
 
-	public Object[][] visualizarDatos() {
-		directorio = new File("./src/Carpeta");
-		File[] archivos = directorio.listFiles();
-		Object[][] datos = new Object[archivos.length][2];
-		if (archivos != null) {
-			int i = 0;
-			for (File archivo : archivos) {
-				datos[i][0] = archivo.getName();
-				datos[i][1] = archivo.length();
-				i++;
-			}
-		}
-		return datos;
-	}
 	public boolean serializarEmpleado(String nombre, String dni, int edad, double sueldo, String genero) {
 		Empleado nuevoEmpleado = new Empleado(nombre, dni, edad, sueldo, genero);
 		
-		try(FileOutputStream fileOut = new FileOutputStream("./src/Carpeta/"+dni);
+		try(FileOutputStream fileOut = new FileOutputStream("./src/Carpeta/"+dni+".ser");
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)){
-			
+				
 			objectOut.writeObject(nuevoEmpleado);
 			System.out.println("El objeto empleado ha sido introducido en el archivo empleados.ser");
 			return true;
@@ -51,4 +37,5 @@ public class Modelo {
 		}
 		return false;
 	}
+
 }
