@@ -130,6 +130,15 @@ public class _01_CrearEmpleado extends JFrame implements Vista {
 		});
 		btnCrearUsuario.setBounds(174, 244, 96, 21);
 		getContentPane().add(btnCrearUsuario);
+		
+		JButton btnVolverMenu = new JButton("Menu");
+		btnVolverMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.cambiarVentana(1, 0);
+			}
+		});
+		btnVolverMenu.setBounds(0, 262, 96, 43);
+		getContentPane().add(btnVolverMenu);
 
 	}
 
@@ -167,5 +176,4 @@ public class _01_CrearEmpleado extends JFrame implements Vista {
 
 		this.miModelo = miModelo;
 	}
-
 }
