@@ -20,7 +20,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class _00_Menu extends JFrame implements Vista{
+public class _00_Menu extends JFrame implements Vista {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -36,7 +36,9 @@ public class _00_Menu extends JFrame implements Vista{
 	private JButton btnDescomprimirArchivo;
 	private JButton btnEliminarArchivo;
 	private JButton btnVisualizarArchivo;
-	
+	private JScrollPane scrollPane;
+	private Object[][] datos;
+
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
@@ -44,6 +46,10 @@ public class _00_Menu extends JFrame implements Vista{
 	@Override
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
+	}
+
+	public String getArchivoSeleccionado() {
+		return datos[tableDatos.getSelectedRow()][0] + "";
 	}
 
 	public _00_Menu() {
@@ -54,61 +60,65 @@ public class _00_Menu extends JFrame implements Vista{
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
+
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(317, 0, 382, 433);
 		contentPane.add(scrollPane);
-		
+
 		tableDatos = new JTable();
 		scrollPane.setViewportView(tableDatos);
-		tableDatos.setEnabled(false);
 		tableDatos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		
+
 		JLabel lblNewLabel = new JLabel("Gestor de archivos avanzado");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setBounds(10, 11, 307, 18);
 		contentPane.add(lblNewLabel);
-		
+
 		txtNombreArchivo = new JTextField();
 		txtNombreArchivo.setBounds(10, 55, 96, 20);
 		contentPane.add(txtNombreArchivo);
 		txtNombreArchivo.setColumns(10);
-		
+
 		btnAgregarArchivo = new JButton("Agregar Archivo");
 		btnAgregarArchivo.setBounds(10, 145, 172, 23);
 		contentPane.add(btnAgregarArchivo);
-		
+
 		btnDeserializarArchivo = new JButton("Deserializar Archivo");
 		btnDeserializarArchivo.setBounds(10, 179, 172, 23);
 		contentPane.add(btnDeserializarArchivo);
-		
+
 		btnComprimirArchivo = new JButton("Comprimir archivo");
 		btnComprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 		btnComprimirArchivo.setBounds(10, 214, 172, 23);
 		contentPane.add(btnComprimirArchivo);
-		
+
 		btnDescomprimirArchivo = new JButton("Descomprimir archivo");
 		btnDescomprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 		btnDescomprimirArchivo.setBounds(10, 248, 172, 23);
 		contentPane.add(btnDescomprimirArchivo);
-		
+
 		btnEliminarArchivo = new JButton("Eliminar archivo");
+		btnEliminarArchivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.cogerDatosEliminarEmpleado();
+			}
+		});
 		btnEliminarArchivo.setBounds(10, 282, 172, 23);
 		contentPane.add(btnEliminarArchivo);
-		
+
 		btnVisualizarArchivo = new JButton("Visualizar archivo");
 		btnVisualizarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object [][] datos = miControlador.visualizarDatos();
-				String[] columnas = {"Nombre", "Tamaño"};
+				datos = miControlador.visualizarDatos();
+				String[] columnas = { "Nombre", "Tamaño" };
 				modelo = new DefaultTableModel(datos, columnas);
 				tableDatos.setModel(modelo);
 			}
@@ -118,12 +128,12 @@ public class _00_Menu extends JFrame implements Vista{
 		JButton btnCambioVista = new JButton("CambiarVista");
 		btnCambioVista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.cambiarVentana(0,1);
+				miControlador.cambiarVentana(0, 1);
 			}
 		});
 		btnCambioVista.setBounds(96, 374, 85, 21);
 		contentPane.add(btnCambioVista);
-		
+
 		// Label para poder poner una imagen de fondo
 //		lblImagenPrincipio = new JLabel("New label");
 //		lblImagenPrincipio.setBounds(-36, -45, 367, 328);

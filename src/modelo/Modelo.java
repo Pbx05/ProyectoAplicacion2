@@ -12,7 +12,7 @@ public class Modelo {
 	private Vista[] misVistas;
 	private Controlador miControlador;
 	private File usuarios;
-	File directorio;
+	private File directorio;
 
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
@@ -53,5 +53,20 @@ public class Modelo {
 		}
 		return false;
 	}
+
+	public void eliminarEmpleado(String nombreArchivo) {
+		directorio = new File("./src/Carpeta");
+		File[] archivos = directorio.listFiles();
+		if (archivos != null) {
+			int i = 0;
+			for (File archivo : archivos) {
+				if(archivo.getName().equals(nombreArchivo)) {
+					archivo.delete();
+				}
+
+			}
+		}
+	}
+
 
 }

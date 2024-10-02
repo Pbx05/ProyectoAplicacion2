@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import modelo.Modelo;
 import vista.Vista;
+import vista._00_Menu;
 import vista._01_CrearEmpleado;
 
 public class Controlador {
@@ -41,5 +42,13 @@ public class Controlador {
 
 		return miModelo.serializarEmpleado(nombre, dni, edad, sueldo, genero);
 
+	}
+	
+
+	public void cogerDatosEliminarEmpleado() {
+
+		String nombreArchivo = ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
+		
+		miModelo.eliminarEmpleado(nombreArchivo);
 	}
 }
