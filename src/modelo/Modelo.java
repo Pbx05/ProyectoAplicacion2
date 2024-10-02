@@ -25,12 +25,24 @@ public class Modelo {
 	public Object[][] visualizarDatos() {
 		directorio = new File("./src/Carpeta");
 		File[] archivos = directorio.listFiles();
-		Object[][] datos = new Object[archivos.length][2];
+		Object[][] datos = new Object[archivos.length][3];
+		String estado = "";
 		if (archivos != null) {
 			int i = 0;
 			for (File archivo : archivos) {
+				if(archivo.getName().endsWith(".txt")) {
+					estado = "normal";
+				}else if(archivo.getName().endsWith(".ser")){
+					estado = "serializado";
+				}else {
+					estado = "comprimido";
+				}
+				if(archivo.getName().endsWith(".ser.zip")) {
+					estado = "serializado y comprimido";
+				}
 				datos[i][0] = archivo.getName();
 				datos[i][1] = archivo.length();
+				datos[i][2] = estado;
 				i++;
 			}
 		}

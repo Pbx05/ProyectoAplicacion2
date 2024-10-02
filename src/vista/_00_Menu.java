@@ -115,10 +115,10 @@ public class _00_Menu extends JFrame implements Vista {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.cogerDatosEliminarEmpleado();
 				datos = miControlador.visualizarDatos();
-				String[] columnas = {"Nombre", "Tamaño", "Estado"};
+				String[] columnas = { "Nombre", "Tamaño", "Estado" };
 				modelo = new DefaultTableModel(datos, columnas);
 				tableDatos.setModel(modelo);
-				
+
 			}
 		});
 		btnEliminarArchivo.setBounds(10, 282, 172, 23);
@@ -128,13 +128,23 @@ public class _00_Menu extends JFrame implements Vista {
 		btnVisualizarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				datos = miControlador.visualizarDatos();
-				String[] columnas = { "Nombre", "Tamaño" };
+
+				String[] columnas = { "Nombre", "Tamaño", "Estado" };
 				modelo = new DefaultTableModel(datos, columnas);
 				tableDatos.setModel(modelo);
 			}
 		});
 		btnVisualizarArchivo.setBounds(10, 316, 172, 23);
 		contentPane.add(btnVisualizarArchivo);
+
+		JButton btnCambioVista = new JButton("CambiarVista");
+		btnCambioVista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.cambiarVentana(0, 1);
+			}
+		});
+		btnCambioVista.setBounds(96, 374, 85, 21);
+		contentPane.add(btnCambioVista);
 
 		// Label para poder poner una imagen de fondo
 //		lblImagenPrincipio = new JLabel("New label");
