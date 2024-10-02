@@ -87,6 +87,15 @@ public class _00_Menu extends JFrame implements Vista{
 		btnEliminarArchivo.setBounds(10, 282, 155, 23);
 		contentPane.add(btnEliminarArchivo);
 		
+		JButton btnCambioVista = new JButton("CambiarVista");
+		btnCambioVista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.cambiarVentana(0,1);
+			}
+		});
+		btnCambioVista.setBounds(96, 374, 85, 21);
+		contentPane.add(btnCambioVista);
+		
 		// Label para poder poner una imagen de fondo
 //		lblImagenPrincipio = new JLabel("New label");
 //		lblImagenPrincipio.setBounds(-36, -45, 367, 328);
