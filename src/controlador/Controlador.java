@@ -20,4 +20,9 @@ public class Controlador {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
+
+	public Object[][] visualizarDatos() {
+		Object [][] datos = miModelo.visualizarDatos();
+		return datos;		
+	}
 }

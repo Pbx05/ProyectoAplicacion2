@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.Controlador;
 import modelo.Modelo;
@@ -14,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,9 +26,16 @@ public class _00_Menu extends JFrame implements Vista{
 	private JPanel contentPane;
 	private Controlador miControlador;
 	private Modelo miModelo;
-	private JTable table;
+	private JTable tableDatos;
+	private DefaultTableModel modelo;
 	private JLabel lblImagenPrincipio;
 	private JTextField txtNombreArchivo;
+	private JButton btnAgregarArchivo;
+	private JButton btnDeserializarArchivo;
+	private JButton btnComprimirArchivo;
+	private JButton btnDescomprimirArchivo;
+	private JButton btnEliminarArchivo;
+	private JButton btnVisualizarArchivo;
 	
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
@@ -50,8 +59,10 @@ public class _00_Menu extends JFrame implements Vista{
 		scrollPane.setBounds(317, 0, 382, 433);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tableDatos = new JTable();
+		scrollPane.setViewportView(tableDatos);
+		tableDatos.setEnabled(false);
+		tableDatos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		JLabel lblNewLabel = new JLabel("Gestor de archivos avanzado");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -63,29 +74,47 @@ public class _00_Menu extends JFrame implements Vista{
 		contentPane.add(txtNombreArchivo);
 		txtNombreArchivo.setColumns(10);
 		
-		JButton btnAgregarArchivo = new JButton("Agregar Archivo");
-		btnAgregarArchivo.setBounds(10, 145, 155, 23);
+		btnAgregarArchivo = new JButton("Agregar Archivo");
+		btnAgregarArchivo.setBounds(10, 145, 172, 23);
 		contentPane.add(btnAgregarArchivo);
 		
-		JButton btnDeserializarArchivo = new JButton("Deserializar Archivo");
-		btnDeserializarArchivo.setBounds(10, 179, 155, 23);
+		btnDeserializarArchivo = new JButton("Deserializar Archivo");
+		btnDeserializarArchivo.setBounds(10, 179, 172, 23);
 		contentPane.add(btnDeserializarArchivo);
 		
-		JButton btnComprimirArchivo = new JButton("Comprimir archivo");
+		btnComprimirArchivo = new JButton("Comprimir archivo");
 		btnComprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
-		btnComprimirArchivo.setBounds(10, 214, 155, 23);
+		btnComprimirArchivo.setBounds(10, 214, 172, 23);
 		contentPane.add(btnComprimirArchivo);
 		
-		JButton btnDescomprimirArchivo = new JButton("Descomprimir archivo");
-		btnDescomprimirArchivo.setBounds(10, 248, 155, 23);
+		btnDescomprimirArchivo = new JButton("Descomprimir archivo");
+		btnDescomprimirArchivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnDescomprimirArchivo.setBounds(10, 248, 172, 23);
 		contentPane.add(btnDescomprimirArchivo);
 		
-		JButton btnEliminarArchivo = new JButton("Eliminar archivo");
-		btnEliminarArchivo.setBounds(10, 282, 155, 23);
+		btnEliminarArchivo = new JButton("Eliminar archivo");
+		btnEliminarArchivo.setBounds(10, 282, 172, 23);
 		contentPane.add(btnEliminarArchivo);
+		
+		btnVisualizarArchivo = new JButton("Visualizar archivo");
+		btnVisualizarArchivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object [][] datos = miControlador.visualizarDatos();
+				String[] columnas = {"Nombre", "Tamaño"};
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
+			}
+		});
+		btnVisualizarArchivo.setBounds(10, 316, 172, 23);
+		contentPane.add(btnVisualizarArchivo);
 		
 		// Label para poder poner una imagen de fondo
 //		lblImagenPrincipio = new JLabel("New label");
