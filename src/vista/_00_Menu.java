@@ -29,7 +29,6 @@ public class _00_Menu extends JFrame implements Vista {
 	private JTable tableDatos;
 	private DefaultTableModel modelo;
 	private JLabel lblImagenPrincipio;
-	private JTextField txtNombreArchivo;
 	private JButton btnAgregarArchivo;
 	private JButton btnDeserializarArchivo;
 	private JButton btnComprimirArchivo;
@@ -74,11 +73,6 @@ public class _00_Menu extends JFrame implements Vista {
 		lblNewLabel.setBounds(10, 11, 307, 18);
 		contentPane.add(lblNewLabel);
 
-		txtNombreArchivo = new JTextField();
-		txtNombreArchivo.setBounds(10, 55, 96, 20);
-		contentPane.add(txtNombreArchivo);
-		txtNombreArchivo.setColumns(10);
-
 		btnAgregarArchivo = new JButton("Agregar Archivo");
 		btnAgregarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,6 +83,17 @@ public class _00_Menu extends JFrame implements Vista {
 		contentPane.add(btnAgregarArchivo);
 
 		btnDeserializarArchivo = new JButton("Deserializar Archivo");
+		btnDeserializarArchivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(miControlador.recogerDatosDeserializarEmpleado()) {
+					datos = miControlador.visualizarDatos();
+
+					String[] columnas = { "Nombre", "Tamaño", "Estado" };
+					modelo = new DefaultTableModel(datos, columnas);
+					tableDatos.setModel(modelo);
+				}
+			}
+		});
 		btnDeserializarArchivo.setBounds(10, 179, 172, 23);
 		contentPane.add(btnDeserializarArchivo);
 
@@ -136,15 +141,6 @@ public class _00_Menu extends JFrame implements Vista {
 		});
 		btnVisualizarArchivo.setBounds(10, 316, 172, 23);
 		contentPane.add(btnVisualizarArchivo);
-
-		JButton btnCambioVista = new JButton("CambiarVista");
-		btnCambioVista.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				miControlador.cambiarVentana(0, 1);
-			}
-		});
-		btnCambioVista.setBounds(96, 374, 85, 21);
-		contentPane.add(btnCambioVista);
 
 		// Label para poder poner una imagen de fondo
 //		lblImagenPrincipio = new JLabel("New label");

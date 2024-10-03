@@ -51,4 +51,11 @@ public class Controlador {
 		
 		miModelo.eliminarEmpleado(nombreArchivo);
 	}
+
+	public boolean recogerDatosDeserializarEmpleado() {
+		String nombreArchivo= ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
+		
+		return miModelo.deserializarEmpleado(nombreArchivo);
+		
+	}
 }

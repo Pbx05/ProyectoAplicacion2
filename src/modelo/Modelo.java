@@ -1,8 +1,12 @@
 package modelo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import controlador.Controlador;
@@ -54,13 +58,13 @@ public class Modelo {
 		
 		try(FileOutputStream fileOut = new FileOutputStream("./src/Carpeta/"+dni+".ser");
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)){
-				
+
 			objectOut.writeObject(nuevoEmpleado);
 			System.out.println("El objeto empleado ha sido introducido en el archivo empleados.ser");
 			return true;
-			
+
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 		return false;
@@ -78,6 +82,41 @@ public class Modelo {
 
 			}
 		}
+	}
+
+	public boolean deserializarEmpleado(String nombreArchivo) {
+		Empleado empleado = null;
+
+		String nuevoNombre = nombreArchivo.substring(0,(nombreArchivo.length()-4));
+		File archivoSer = new File("./src/Carpeta/"+nombreArchivo);
+
+		try(FileInputStream archivo = new FileInputStream("./src/Carpeta/"+nombreArchivo);
+				ObjectInputStream ois = new ObjectInputStream(archivo)){
+
+			empleado = (Empleado) ois.readObject();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		if(empleado != null) {
+			
+			try(FileWriter writer = new FileWriter("./src/Carpeta/"+nuevoNombre+".txt")){
+				writer.write(empleado.toString());
+				archivoSer.delete();
+				
+				return true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+		
 	}
 
 

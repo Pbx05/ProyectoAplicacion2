@@ -35,6 +35,7 @@ public class _01_CrearEmpleado extends JFrame implements Vista {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
+
 		JLabel lblCrearEmpleado = new JLabel("Crear Empleado");
 		lblCrearEmpleado.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 29));
 		lblCrearEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,14 +127,17 @@ public class _01_CrearEmpleado extends JFrame implements Vista {
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.cogerDatosCrearUsuario();
+				limpiarCampos();
 			}
+
 		});
 		btnCrearUsuario.setBounds(174, 244, 96, 21);
 		getContentPane().add(btnCrearUsuario);
-		
+
 		JButton btnVolverMenu = new JButton("Menu");
 		btnVolverMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarCampos();
 				miControlador.cambiarVentana(1, 0);
 			}
 		});
@@ -175,5 +179,14 @@ public class _01_CrearEmpleado extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 
 		this.miModelo = miModelo;
+	}
+
+	private void limpiarCampos() {
+		txtNombre.setText("");
+		txtDni.setText("");
+		txtSueldo.setText("");
+		txtEdad.setText("");
+		txtGenero.setText("");
+		btnCrearUsuario.setEnabled(false);
 	}
 }
