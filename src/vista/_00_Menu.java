@@ -29,7 +29,6 @@ public class _00_Menu extends JFrame implements Vista{
 	private JTable tableDatos;
 	private DefaultTableModel modelo;
 	private JLabel lblImagenPrincipio;
-	private JTextField txtNombreArchivoZip;
 	private JButton btnAgregarArchivo;
 	private JButton btnDeserializarArchivo;
 	private JButton btnComprimirArchivo;
@@ -51,9 +50,6 @@ public class _00_Menu extends JFrame implements Vista{
 		return datos[tableDatos.getSelectedRow()][0] + "";
 	}
 
-	public JTextField getTxtNombreArchivoZip() {
-		return txtNombreArchivoZip;		
-	}
 	public _00_Menu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 713, 470);
@@ -76,11 +72,6 @@ public class _00_Menu extends JFrame implements Vista{
 		lblNewLabel.setBounds(10, 11, 307, 18);
 		contentPane.add(lblNewLabel);
 		
-		txtNombreArchivoZip = new JTextField();
-		txtNombreArchivoZip.setBounds(198, 215, 96, 20);
-		contentPane.add(txtNombreArchivoZip);
-		txtNombreArchivoZip.setColumns(10);
-		
 		btnAgregarArchivo = new JButton("Agregar Archivo");
 		btnAgregarArchivo.setBounds(10, 145, 172, 23);
 		contentPane.add(btnAgregarArchivo);
@@ -93,6 +84,10 @@ public class _00_Menu extends JFrame implements Vista{
 		btnComprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.comprimirArchivo();
+				datos = miControlador.visualizarDatos();
+				String[] columnas = {"Nombre", "Tamaño", "Estado"};
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
 			}
 		});
 		btnComprimirArchivo.setBounds(10, 214, 172, 23);
@@ -102,6 +97,10 @@ public class _00_Menu extends JFrame implements Vista{
 		btnDescomprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.descomprimirArchivo();
+				datos = miControlador.visualizarDatos();
+				String[] columnas = {"Nombre", "Tamaño", "Estado"};
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
 			}
 		});
 		btnDescomprimirArchivo.setBounds(10, 248, 172, 23);
@@ -131,11 +130,7 @@ public class _00_Menu extends JFrame implements Vista{
 		});
 		btnCambioVista.setBounds(96, 374, 116, 21);
 		contentPane.add(btnCambioVista);
-		
-		// Label para poder poner una imagen de fondo
-//		lblImagenPrincipio = new JLabel("New label");
-//		lblImagenPrincipio.setBounds(-36, -45, 367, 328);
-//		contentPane.add(lblImagenPrincipio);
-//		lblImagenPrincipio.setIcon(new ImageIcon(_00_Menu.class.getResource("/Assets/pngtree-colorful-tetris-lego-blo.jpg")));
 	}
+	
+	
 }

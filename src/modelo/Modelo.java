@@ -70,8 +70,9 @@ public class Modelo {
 		return false;
 	}
 
-	public void comprimirArchivo(String nombreArchivo, String nombreArchivoAComprimir) {
-		String nombreArchivoZip = "./src/Carpeta/" + nombreArchivo + ".zip";
+	public void comprimirArchivo(String nombreArchivoAComprimir) {
+		String nuevoNombre = nombreArchivoAComprimir.substring(0, (nombreArchivoAComprimir.length() - 4));
+		String nombreArchivoZip = "./src/Carpeta/" + nuevoNombre + ".zip";
 		String[] archivosAZipear = {"./src/Carpeta/" + nombreArchivoAComprimir};
 		try {
 			FileOutputStream fos = new FileOutputStream(nombreArchivoZip);

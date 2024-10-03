@@ -47,8 +47,7 @@ public class Controlador {
 
 	public void comprimirArchivo() {
 		String nombreArchivoAComprimir = ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
-		String nombreArchivo = ((_00_Menu)misVistas[0]).getTxtNombreArchivoZip().getText();
-		miModelo.comprimirArchivo(nombreArchivo, nombreArchivoAComprimir);	
+		miModelo.comprimirArchivo(nombreArchivoAComprimir);	
 	}
 
 	public void descomprimirArchivo() {
