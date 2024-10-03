@@ -1,9 +1,11 @@
 package controlador;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 import modelo.Modelo;
 import vista.Vista;
+import vista._00_Menu;
 import vista._01_CrearEmpleado;
 
 public class Controlador {
@@ -41,5 +43,16 @@ public class Controlador {
 
 		return miModelo.serializarEmpleado(nombre, dni, edad, sueldo, genero);
 
+	}
+
+	public void comprimirArchivo() {
+		String nombreArchivoAComprimir = ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
+		String nombreArchivo = ((_00_Menu)misVistas[0]).getTxtNombreArchivoZip().getText();
+		miModelo.comprimirArchivo(nombreArchivo, nombreArchivoAComprimir);	
+	}
+
+	public void descomprimirArchivo() {
+		String nombreArchivoADescomprimir = ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
+		miModelo.descomprimirArchivo(nombreArchivoADescomprimir);
 	}
 }

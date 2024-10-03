@@ -29,7 +29,7 @@ public class _00_Menu extends JFrame implements Vista{
 	private JTable tableDatos;
 	private DefaultTableModel modelo;
 	private JLabel lblImagenPrincipio;
-	private JTextField txtNombreArchivo;
+	private JTextField txtNombreArchivoZip;
 	private JButton btnAgregarArchivo;
 	private JButton btnDeserializarArchivo;
 	private JButton btnComprimirArchivo;
@@ -46,7 +46,14 @@ public class _00_Menu extends JFrame implements Vista{
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
 	}
+	
+	public String getArchivoSeleccionado() {
+		return datos[tableDatos.getSelectedRow()][0] + "";
+	}
 
+	public JTextField getTxtNombreArchivoZip() {
+		return txtNombreArchivoZip;		
+	}
 	public _00_Menu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 713, 470);
@@ -69,10 +76,10 @@ public class _00_Menu extends JFrame implements Vista{
 		lblNewLabel.setBounds(10, 11, 307, 18);
 		contentPane.add(lblNewLabel);
 		
-		txtNombreArchivo = new JTextField();
-		txtNombreArchivo.setBounds(10, 55, 96, 20);
-		contentPane.add(txtNombreArchivo);
-		txtNombreArchivo.setColumns(10);
+		txtNombreArchivoZip = new JTextField();
+		txtNombreArchivoZip.setBounds(198, 215, 96, 20);
+		contentPane.add(txtNombreArchivoZip);
+		txtNombreArchivoZip.setColumns(10);
 		
 		btnAgregarArchivo = new JButton("Agregar Archivo");
 		btnAgregarArchivo.setBounds(10, 145, 172, 23);
@@ -85,7 +92,7 @@ public class _00_Menu extends JFrame implements Vista{
 		btnComprimirArchivo = new JButton("Comprimir archivo");
 		btnComprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				miControlador.comprimirArchivo();
 			}
 		});
 		btnComprimirArchivo.setBounds(10, 214, 172, 23);
@@ -94,7 +101,7 @@ public class _00_Menu extends JFrame implements Vista{
 		btnDescomprimirArchivo = new JButton("Descomprimir archivo");
 		btnDescomprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				miControlador.descomprimirArchivo();
 			}
 		});
 		btnDescomprimirArchivo.setBounds(10, 248, 172, 23);
@@ -122,7 +129,7 @@ public class _00_Menu extends JFrame implements Vista{
 				miControlador.cambiarVentana(0,1);
 			}
 		});
-		btnCambioVista.setBounds(96, 374, 85, 21);
+		btnCambioVista.setBounds(96, 374, 116, 21);
 		contentPane.add(btnCambioVista);
 		
 		// Label para poder poner una imagen de fondo
