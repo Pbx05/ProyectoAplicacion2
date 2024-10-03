@@ -1,1 +1,0 @@
-Empleado [nombre=asdas, dni=ju, edad=1231, sueldo=123.0, genero=sadasj]
