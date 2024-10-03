@@ -1,6 +1,7 @@
 package controlador;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 import modelo.Modelo;
 import vista.Vista;
@@ -24,8 +25,8 @@ public class Controlador {
 	}
 
 	public Object[][] visualizarDatos() {
-		Object [][] datos = miModelo.visualizarDatos();
-		return datos;		
+		Object[][] datos = miModelo.visualizarDatos();
+		return datos;
 	}
 
 	public void cambiarVentana(int desde, int hasta) {
@@ -43,19 +44,27 @@ public class Controlador {
 		return miModelo.serializarEmpleado(nombre, dni, edad, sueldo, genero);
 
 	}
-	
 
 	public void cogerDatosEliminarEmpleado() {
 
-		String nombreArchivo = ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
-		
+		String nombreArchivo = ((_00_Menu) misVistas[0]).getArchivoSeleccionado();
+
 		miModelo.eliminarEmpleado(nombreArchivo);
 	}
 
 	public boolean recogerDatosDeserializarEmpleado() {
-		String nombreArchivo= ((_00_Menu)misVistas[0]).getArchivoSeleccionado();
-		
+		String nombreArchivo = ((_00_Menu) misVistas[0]).getArchivoSeleccionado();
+
 		return miModelo.deserializarEmpleado(nombreArchivo);
-		
+	}
+
+	public void comprimirArchivo() {
+		String nombreArchivoAComprimir = ((_00_Menu) misVistas[0]).getArchivoSeleccionado();
+		miModelo.comprimirArchivo(nombreArchivoAComprimir);
+	}
+
+	public void descomprimirArchivo() {
+		String nombreArchivoADescomprimir = ((_00_Menu) misVistas[0]).getArchivoSeleccionado();
+		miModelo.descomprimirArchivo(nombreArchivoADescomprimir);
 	}
 }

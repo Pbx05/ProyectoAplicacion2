@@ -50,7 +50,7 @@ public class _00_Menu extends JFrame implements Vista {
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
 	}
-
+	
 	public String getArchivoSeleccionado() {
 		return datos[tableDatos.getSelectedRow()][0] + "";
 	}
@@ -128,6 +128,11 @@ public class _00_Menu extends JFrame implements Vista {
 		btnComprimirArchivo = new JButton("");
 		btnComprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				miControlador.comprimirArchivo();
+				datos = miControlador.visualizarDatos();
+				String[] columnas = {"Nombre", "Tamaño", "Estado"};
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
 
 			}
 		});
@@ -142,6 +147,12 @@ public class _00_Menu extends JFrame implements Vista {
 		btnDescomprimirArchivo = new JButton("");
 		btnDescomprimirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				miControlador.descomprimirArchivo();
+				datos = miControlador.visualizarDatos();
+				String[] columnas = {"Nombre", "Tamaño", "Estado"};
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
 
 			}
 		});
@@ -208,11 +219,15 @@ public class _00_Menu extends JFrame implements Vista {
 		contentPane.add(lblFondo);
 		lblFondo.setIcon(imagen);
 		
-		
-		// Label para poder poner una imagen de fondo
-//		lblImagenPrincipio = new JLabel("New label");
-//		lblImagenPrincipio.setBounds(-36, -45, 367, 328);
-//		contentPane.add(lblImagenPrincipio);
-//		lblImagenPrincipio.setIcon(new ImageIcon(_00_Menu.class.getResource("/Assets/pngtree-colorful-tetris-lego-blo.jpg")));
+		JButton btnCambioVista = new JButton("CambiarVista");
+		btnCambioVista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.cambiarVentana(0,1);
+			}
+		});
+		btnCambioVista.setBounds(96, 374, 116, 21);
+		contentPane.add(btnCambioVista);
 	}
+	
+	
 }
