@@ -218,15 +218,6 @@ public class _00_Menu extends JFrame implements Vista {
 		lblFondo.setBounds(0, 0, 699, 433);
 		contentPane.add(lblFondo);
 		lblFondo.setIcon(imagen);
-		
-		JButton btnCambioVista = new JButton("CambiarVista");
-		btnCambioVista.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				miControlador.cambiarVentana(0,1);
-			}
-		});
-		btnCambioVista.setBounds(96, 374, 116, 21);
-		contentPane.add(btnCambioVista);
 	}
 	
 	
