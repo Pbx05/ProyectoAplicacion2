@@ -62,13 +62,7 @@ public class _00_Menu extends JFrame implements Vista {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		lblFondoMandos = new JLabel("New label");
-		lblFondoMandos.setBounds(339, 230, 360, 203);
-		contentPane.add(lblFondoMandos);
 		ImageIcon imagenMandos = new ImageIcon("./src/Assets/Mandos.png");
-		Image imagenEscalada = imagenMandos.getImage().getScaledInstance(lblFondoMandos.getWidth(), lblFondoMandos.getHeight(), Image.SCALE_SMOOTH);
-		lblFondoMandos.setIcon(new ImageIcon(imagenEscalada));
 
 		
 
@@ -213,6 +207,12 @@ public class _00_Menu extends JFrame implements Vista {
 		
 		
 		ImageIcon imagen = new ImageIcon("./src/Assets/FondoEspacio.jpg");
+		
+		lblFondoMandos = new JLabel("New label");
+		lblFondoMandos.setBounds(339, 230, 360, 203);
+		contentPane.add(lblFondoMandos);
+		Image imagenEscalada = imagenMandos.getImage().getScaledInstance(lblFondoMandos.getWidth(), lblFondoMandos.getHeight(), Image.SCALE_SMOOTH);
+		lblFondoMandos.setIcon(new ImageIcon(imagenEscalada));
 
 		lblFondo = new JLabel(imagen);
 		lblFondo.setBounds(0, 0, 699, 433);
