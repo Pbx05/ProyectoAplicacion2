@@ -96,6 +96,11 @@ public class _00_Menu extends JFrame implements Vista {
 		btnAgregarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.cambiarVentana(0, 1);
+				datos = miControlador.visualizarDatos();
+
+				String[] columnas = { "Nombre", "Tamaño", "Estado" };
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
 			}
 		});
 		btnAgregarArchivo.setBackground(new Color(128, 0, 128)); 

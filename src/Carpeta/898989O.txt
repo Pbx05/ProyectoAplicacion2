@@ -1,0 +1,1 @@
+Empleado [nombre=pollas, dni=898989O, edad=76, sueldo=8888.0, genero=mucho]

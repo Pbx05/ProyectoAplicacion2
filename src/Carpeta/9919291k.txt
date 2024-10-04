@@ -1,1 +1,0 @@
-Empleado [nombre=prueeba, dni=9919291k, edad=90, sueldo=12.0, genero=lol]

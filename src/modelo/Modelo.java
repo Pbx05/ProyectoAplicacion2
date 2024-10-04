@@ -56,14 +56,31 @@ public class Modelo {
 		return datos;
 	}
 
+	/**
+	 * Método que Crea un objeto y lo serializa, para despues meterlo en un archivo
+	 * serializado
+	 * 
+	 * @param nombre = input de usuario para nombre de Empleado
+	 * @param dni    = input de usuario para dni de empleado
+	 * @param edad   = input de usuario para asignar edad de empleado
+	 * @param sueldo = input de usuario para asignar el sueldo al objeto de empleado
+	 * @param genero = input de usuario para asignar el sueldo al empleado
+	 * @return True = se ha serializado y creado el archivo / False = No se ha
+	 *         serialiado y creado el archivo
+	 */
 	public boolean serializarEmpleado(String nombre, String dni, int edad, double sueldo, String genero) {
+		// Creo un objeto de la clase empleado que estará serializado
 		Empleado nuevoEmpleado = new Empleado(nombre, dni, edad, sueldo, genero);
 
+		// Creo un fileoutputstream con la direccion a la que quiero crear el nuevo
+		// archivo, y le añado la extension manualmente
 		try (FileOutputStream fileOut = new FileOutputStream("./src/Carpeta/" + dni + ".ser");
+				// Ahora le paso ese objeto a objectOutputStream
 				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
+			// Escribo en el objetOutput el objeto serializado, y me crea un archivo con el
+			// objeto serializado
 			objectOut.writeObject(nuevoEmpleado);
-			System.out.println("El objeto empleado ha sido introducido en el archivo empleados.ser");
 			return true;
 
 		} catch (IOException e) {
@@ -73,12 +90,24 @@ public class Modelo {
 		return false;
 	}
 
+	/**
+	 * Método encargado de eliminar un fichero de la carpeta
+	 * 
+	 * @param nombreArchivo = nombre del archivo para buscar cual eliminar
+	 */
 	public void eliminarEmpleado(String nombreArchivo) {
+		// Uso un objeto file, y le asigno la ruta de la carpeta con los archivos, para
+		// que busque en esa dirección
 		directorio = new File("./src/Carpeta");
+		// En un array de Files, le paso el listFiles de la direccion que se le ha
+		// marcado en la linea anterior, devolverá todos los archivos de la ruta
 		File[] archivos = directorio.listFiles();
 		if (archivos != null) {
-			int i = 0;
+			// Recorro un for each con un iterador file, que pasa por todos los files del
+			// array "archivos"
 			for (File archivo : archivos) {
+				// Si el nombre del archivo es igual al parametro seleccionado para eliminar se
+				// aplicará un delete
 				if (archivo.getName().equals(nombreArchivo)) {
 					archivo.delete();
 				}
@@ -87,15 +116,31 @@ public class Modelo {
 		}
 	}
 
+	/**
+	 * Método que deserializará un archivo y su contenido, para pasarlo de ".ser" a
+	 * ".txt"
+	 * 
+	 * @param nombreArchivo = Nombre de un archivo de la carpeta que será buscado
+	 *                      para su deserialización
+	 * @return True = Se ha serializado el archivo / False = no se ha podido
+	 *         deserializar el archivo
+	 */
 	public boolean deserializarEmpleado(String nombreArchivo) {
 		Empleado empleado = null;
 
+		// Saco el nombre del archivo, quitándole la extension, usando un substring
 		String nuevoNombre = nombreArchivo.substring(0, (nombreArchivo.length() - 4));
+		// Hago un nuevo fichero sin la extensión anterior
 		File archivoSer = new File("./src/Carpeta/" + nombreArchivo);
 
+		// Igual que para serializar, pero con "In" en vez de "Out"
+		// le paso a un fileinputStream la ruta del nuevo archivo que se va a crear
 		try (FileInputStream archivo = new FileInputStream("./src/Carpeta/" + nombreArchivo);
+				// Le paso al objectInput el archivo de fileInput
 				ObjectInputStream ois = new ObjectInputStream(archivo)) {
 
+			// Le asigno a un objeto empleado la lectura del objectINput, que devolverá los
+			// datos deserializados, lo que crea un objeto normal
 			empleado = (Empleado) ois.readObject();
 
 		} catch (FileNotFoundException e) {
@@ -106,18 +151,27 @@ public class Modelo {
 			e.printStackTrace();
 		}
 
+		// Si empleado ha sido rellena de datos entra en el if
 		if (empleado != null) {
 
+			// Creamos un fileWriter con una dirección con el nuevo nombre que hemos
+			// modificado, añadiendo la extension .txt
 			try (FileWriter writer = new FileWriter("./src/Carpeta/" + nuevoNombre + ".txt")) {
+				// Escribo con el fileWriter el metodo toString de la clase empleado, con los
+				// parámetros del objeto
 				writer.write(empleado.toString());
+				// Elimino el archivo antiguo
 				archivoSer.delete();
 
+				// Si realiza todos los pasos devolverá true
 				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
+		// Si en algun momento lanza una excepcion o no entra en algún if, devolverá
+		// false
 		return false;
 
 	}
@@ -130,7 +184,7 @@ public class Modelo {
 			nuevoNombre = nombreArchivoAComprimir.substring(0, (nombreArchivoAComprimir.length() - 4));
 		}
 		String nombreArchivoZip = "./src/Carpeta/" + nuevoNombre + ".zip";
-		String archivoAZipear ="./src/Carpeta/" + nombreArchivoAComprimir;
+		String archivoAZipear = "./src/Carpeta/" + nombreArchivoAComprimir;
 		try {
 			FileOutputStream fos = new FileOutputStream(nombreArchivoZip);
 			ZipOutputStream zos = new ZipOutputStream(fos);

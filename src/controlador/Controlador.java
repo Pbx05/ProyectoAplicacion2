@@ -35,13 +35,18 @@ public class Controlador {
 	}
 
 	public boolean cogerDatosCrearUsuario() {
-		String nombre = ((_01_CrearEmpleado) misVistas[1]).getTxtNombre().getText();
-		String dni = ((_01_CrearEmpleado) misVistas[1]).getTxtDni().getText();
-		int edad = Integer.parseInt(((_01_CrearEmpleado) misVistas[1]).getTxtEdad().getText());
-		double sueldo = Integer.parseInt(((_01_CrearEmpleado) misVistas[1]).getTxtSueldo().getText());
-		String genero = ((_01_CrearEmpleado) misVistas[1]).getTxtGenero().getText();
-
-		return miModelo.serializarEmpleado(nombre, dni, edad, sueldo, genero);
+		try {
+			String nombre = ((_01_CrearEmpleado) misVistas[1]).getTxtNombre().getText();
+			String dni = ((_01_CrearEmpleado) misVistas[1]).getTxtDni().getText();
+			int edad = Integer.parseInt(((_01_CrearEmpleado) misVistas[1]).getTxtEdad().getText());
+			double sueldo = Integer.parseInt(((_01_CrearEmpleado) misVistas[1]).getTxtSueldo().getText());
+			String genero = ((_01_CrearEmpleado) misVistas[1]).getTxtGenero().getText();
+			
+			return miModelo.serializarEmpleado(nombre, dni, edad, sueldo, genero);
+			
+		}catch(NumberFormatException e) {
+			return false;
+		}
 
 	}
 
