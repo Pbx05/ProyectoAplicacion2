@@ -28,7 +28,7 @@ public class Modelo {
 	public void setVista(Vista[] misVistas) {
 		this.misVistas = misVistas;
 	}
-	
+
 	public Object[][] visualizarDatos() {
 		directorio = new File("./src/Carpeta");
 		File[] archivos = directorio.listFiles();
@@ -37,14 +37,14 @@ public class Modelo {
 		if (archivos != null) {
 			int i = 0;
 			for (File archivo : archivos) {
-				if(archivo.getName().endsWith(".txt")) {
+				if (archivo.getName().endsWith(".txt")) {
 					estado = "normal";
-				}else if(archivo.getName().endsWith(".ser")){
+				} else if (archivo.getName().endsWith(".ser")) {
 					estado = "serializado";
-				}else {
+				} else {
 					estado = "comprimido";
 				}
-				if(archivo.getName().endsWith(".ser.zip")) {
+				if (archivo.getName().endsWith(".ser.zip")) {
 					estado = "serializado y comprimido";
 				}
 				datos[i][0] = archivo.getName();
@@ -58,9 +58,9 @@ public class Modelo {
 
 	public boolean serializarEmpleado(String nombre, String dni, int edad, double sueldo, String genero) {
 		Empleado nuevoEmpleado = new Empleado(nombre, dni, edad, sueldo, genero);
-		
-		try(FileOutputStream fileOut = new FileOutputStream("./src/Carpeta/"+dni+".ser");
-			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)){
+
+		try (FileOutputStream fileOut = new FileOutputStream("./src/Carpeta/" + dni + ".ser");
+				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
 			objectOut.writeObject(nuevoEmpleado);
 			System.out.println("El objeto empleado ha sido introducido en el archivo empleados.ser");
@@ -79,7 +79,7 @@ public class Modelo {
 		if (archivos != null) {
 			int i = 0;
 			for (File archivo : archivos) {
-				if(archivo.getName().equals(nombreArchivo)) {
+				if (archivo.getName().equals(nombreArchivo)) {
 					archivo.delete();
 				}
 
@@ -90,11 +90,11 @@ public class Modelo {
 	public boolean deserializarEmpleado(String nombreArchivo) {
 		Empleado empleado = null;
 
-		String nuevoNombre = nombreArchivo.substring(0,(nombreArchivo.length()-4));
-		File archivoSer = new File("./src/Carpeta/"+nombreArchivo);
+		String nuevoNombre = nombreArchivo.substring(0, (nombreArchivo.length() - 4));
+		File archivoSer = new File("./src/Carpeta/" + nombreArchivo);
 
-		try(FileInputStream archivo = new FileInputStream("./src/Carpeta/"+nombreArchivo);
-				ObjectInputStream ois = new ObjectInputStream(archivo)){
+		try (FileInputStream archivo = new FileInputStream("./src/Carpeta/" + nombreArchivo);
+				ObjectInputStream ois = new ObjectInputStream(archivo)) {
 
 			empleado = (Empleado) ois.readObject();
 
@@ -105,48 +105,51 @@ public class Modelo {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		if(empleado != null) {
-			
-			try(FileWriter writer = new FileWriter("./src/Carpeta/"+nuevoNombre+".txt")){
+
+		if (empleado != null) {
+
+			try (FileWriter writer = new FileWriter("./src/Carpeta/" + nuevoNombre + ".txt")) {
 				writer.write(empleado.toString());
 				archivoSer.delete();
-				
+
 				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return false;
-		
+
 	}
 
-
 	public void comprimirArchivo(String nombreArchivoAComprimir) {
-		String nuevoNombre = nombreArchivoAComprimir.substring(0, (nombreArchivoAComprimir.length() - 4));
+		String nuevoNombre = "";
+		if (nombreArchivoAComprimir.endsWith(".ser")) {
+			nuevoNombre = nombreArchivoAComprimir;
+		} else {
+			nuevoNombre = nombreArchivoAComprimir.substring(0, (nombreArchivoAComprimir.length() - 4));
+		}
 		String nombreArchivoZip = "./src/Carpeta/" + nuevoNombre + ".zip";
-		String[] archivosAZipear = {"./src/Carpeta/" + nombreArchivoAComprimir};
+		String archivoAZipear ="./src/Carpeta/" + nombreArchivoAComprimir;
 		try {
 			FileOutputStream fos = new FileOutputStream(nombreArchivoZip);
 			ZipOutputStream zos = new ZipOutputStream(fos);
-			for(String rutaArchivo : archivosAZipear) {
-				File file = new File(rutaArchivo);
-				String nombreArchivoCogido = file.getName();
-				ZipEntry zipEntry = new ZipEntry(nombreArchivoCogido);
-				zos.putNextEntry(zipEntry);
-				FileInputStream fis = new FileInputStream(file);
-				byte[] buffer = new byte[1024];
-				int length;
-				while((length = fis.read(buffer)) >= 0) {
-					zos.write(buffer, 0, length);
-				}
-				zos.closeEntry();
-				zos.close();
-				fis.close();
-				fos.close();
-				file.delete();
+			File file = new File(archivoAZipear);
+			String nombreArchivoCogido = file.getName();
+			ZipEntry zipEntry = new ZipEntry(nombreArchivoCogido);
+			zos.putNextEntry(zipEntry);
+
+			FileInputStream fis = new FileInputStream(file);
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = fis.read(buffer)) >= 0) {
+				zos.write(buffer, 0, length);
 			}
+			zos.closeEntry();
+			fis.close();
+			file.delete();
+			zos.close();
+			fos.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,15 +168,16 @@ public class Modelo {
 			FileInputStream fis = new FileInputStream(rutaZip);
 			ZipInputStream zis = new ZipInputStream(fis);
 			ZipEntry zipEntry;
-			while((zipEntry = zis.getNextEntry()) != null) {
+			while ((zipEntry = zis.getNextEntry()) != null) {
 				String rutaArchivo = direccionSalida + zipEntry.getName();
 				FileOutputStream fos = new FileOutputStream(rutaArchivo);
 				byte[] buffer = new byte[1024];
 				int length;
-				while((length = zis.read(buffer)) > 0) {
+				while ((length = zis.read(buffer)) > 0) {
 					fos.write(buffer, 0, length);
 				}
 				zis.closeEntry();
+				fos.close();
 			}
 			fis.close();
 			zis.close();

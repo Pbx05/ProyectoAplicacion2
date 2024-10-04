@@ -5,6 +5,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -15,13 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controlador.Controlador;
 import modelo.Modelo;
-import javax.swing.SwingConstants;
 
 public class _00_Menu extends JFrame implements Vista {
 
@@ -64,8 +68,6 @@ public class _00_Menu extends JFrame implements Vista {
 		contentPane.setLayout(null);
 		ImageIcon imagenMandos = new ImageIcon("./src/Assets/Mandos.png");
 
-		
-
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(339, 0, 360, 220);
 		contentPane.add(scrollPane);
@@ -73,7 +75,15 @@ public class _00_Menu extends JFrame implements Vista {
 		tableDatos = new JTable();
 		scrollPane.setViewportView(tableDatos);
 		tableDatos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
+		tableDatos.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				EstadoBotonDeserializar();
+				EstadoBotonComprimir();
+				EstadoBotonDescomprimir();
+				EstadoBotonEliminar();
+			}
+		});
+		
 		JLabel lblNewLabel = new JLabel("Gestor de archivos avanzado");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
@@ -116,6 +126,7 @@ public class _00_Menu extends JFrame implements Vista {
 		btnDeserializarArchivo.setFocusPainted(false);  
 		btnDeserializarArchivo.setContentAreaFilled(true); 
 		btnDeserializarArchivo.setOpaque(true);
+		btnDeserializarArchivo.setEnabled(false);
 		btnDeserializarArchivo.setBounds(239, 95, 54, 48);
 		contentPane.add(btnDeserializarArchivo);
 
@@ -135,6 +146,7 @@ public class _00_Menu extends JFrame implements Vista {
 		btnComprimirArchivo.setFocusPainted(false);  // Evita el borde de enfoque
 		btnComprimirArchivo.setContentAreaFilled(true); // Para rellenar el área del botón
 		btnComprimirArchivo.setOpaque(true);  // Para que el fondo sea opaco
+		btnComprimirArchivo.setEnabled(false);
 		btnComprimirArchivo.setBounds(239, 170, 54, 48);
 		contentPane.add(btnComprimirArchivo);
 
@@ -155,6 +167,7 @@ public class _00_Menu extends JFrame implements Vista {
 		btnDescomprimirArchivo.setFocusPainted(false);
 		btnDescomprimirArchivo.setContentAreaFilled(true);
 		btnDescomprimirArchivo.setOpaque(true);
+		btnDescomprimirArchivo.setEnabled(false);
 		btnDescomprimirArchivo.setBounds(239, 239, 54, 48);
 		contentPane.add(btnDescomprimirArchivo);
 
@@ -174,6 +187,7 @@ public class _00_Menu extends JFrame implements Vista {
 		btnEliminarArchivo.setFocusPainted(false); 
 		btnEliminarArchivo.setContentAreaFilled(true); 
 		btnEliminarArchivo.setOpaque(true);  
+		btnEliminarArchivo.setEnabled(false);
 		btnEliminarArchivo.setBounds(239, 309, 54, 48);
 		contentPane.add(btnEliminarArchivo);
 
@@ -184,27 +198,26 @@ public class _00_Menu extends JFrame implements Vista {
 		JLabel lblDeserializarArchivo = new JLabel("Deserializar ");
 		lblDeserializarArchivo.setForeground(new Color(255, 255, 255));
 		lblDeserializarArchivo.setFont(new Font("Sitka Heading", Font.BOLD, 20));
-		lblDeserializarArchivo.setBounds(80, 111, 127, 23);
+		lblDeserializarArchivo.setBounds(58, 111, 149, 23);
 		contentPane.add(lblDeserializarArchivo);
 		
 		JLabel lblComprimirArchivo = new JLabel("Comprimir");
 		lblComprimirArchivo.setForeground(new Color(255, 255, 255));
 		lblComprimirArchivo.setFont(new Font("Sitka Heading", Font.BOLD, 20));
-		lblComprimirArchivo.setBounds(80, 187, 127, 23);
+		lblComprimirArchivo.setBounds(58, 187, 149, 23);
 		contentPane.add(lblComprimirArchivo);
 		
 		JLabel lblDescomprimirArchivo = new JLabel("Descomprimir");
 		lblDescomprimirArchivo.setForeground(new Color(255, 255, 255));
 		lblDescomprimirArchivo.setFont(new Font("Sitka Heading", Font.BOLD, 20));
-		lblDescomprimirArchivo.setBounds(80, 256, 127, 23);
+		lblDescomprimirArchivo.setBounds(58, 256, 149, 23);
 		contentPane.add(lblDescomprimirArchivo);
 		
 		JLabel lblEliminarArchivo = new JLabel("Eliminar");
 		lblEliminarArchivo.setForeground(new Color(255, 255, 255));
 		lblEliminarArchivo.setFont(new Font("Sitka Heading", Font.BOLD, 20));
-		lblEliminarArchivo.setBounds(80, 327, 127, 23);
+		lblEliminarArchivo.setBounds(58, 327, 149, 23);
 		contentPane.add(lblEliminarArchivo);
-		
 		
 		ImageIcon imagen = new ImageIcon("./src/Assets/FondoEspacio.jpg");
 		
@@ -218,7 +231,47 @@ public class _00_Menu extends JFrame implements Vista {
 		lblFondo.setBounds(0, 0, 699, 433);
 		contentPane.add(lblFondo);
 		lblFondo.setIcon(imagen);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				datos = miControlador.visualizarDatos();
+				String[] columnas = { "Nombre", "Tamaño", "Estado" };
+				modelo = new DefaultTableModel(datos, columnas);
+				tableDatos.setModel(modelo);
+			}
+		});
 	}
 	
+	private void EstadoBotonDeserializar() {
+		if(datos[tableDatos.getSelectedRow()][2].equals("serializado")) {
+			btnDeserializarArchivo.setEnabled(true);
+		}else {
+			btnDeserializarArchivo.setEnabled(false);
+		}	
+	}
 	
+	private void EstadoBotonComprimir() {
+		if(datos[tableDatos.getSelectedRow()][2].equals("normal") || datos[tableDatos.getSelectedRow()][2].equals("serializado")) {
+			btnComprimirArchivo.setEnabled(true);
+		}else {
+			btnComprimirArchivo.setEnabled(false);
+		}	
+	}
+	
+	private void EstadoBotonDescomprimir() {
+		if(datos[tableDatos.getSelectedRow()][2].equals("comprimido") || datos[tableDatos.getSelectedRow()][2].equals("serializado y comprimido")) {
+			btnDescomprimirArchivo.setEnabled(true);
+		}else {
+			btnDescomprimirArchivo.setEnabled(false);
+		}	
+	}
+	
+	private void EstadoBotonEliminar() {
+		if(tableDatos.getSelectedRow() != -1) {
+			btnEliminarArchivo.setEnabled(true);
+		}else {
+			btnEliminarArchivo.setEnabled(false);
+		}	
+	}
 }
