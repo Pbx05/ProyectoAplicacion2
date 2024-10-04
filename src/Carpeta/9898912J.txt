@@ -1,1 +1,0 @@
-Empleado [nombre=nuevo, dni=9898912J, edad=89, sueldo=1.0, genero=youtube]
